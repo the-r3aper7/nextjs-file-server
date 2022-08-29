@@ -16,21 +16,26 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     const { path } = req.query as { path: string };
     const bb = busboy({ headers: req.headers });
+    // Handling uploading data
     const writeFile = new Promise<void>(() => {
       bb.on("file", async (_, file, info) => {
         const filename = info.filename;
         const filePath = join(publicPath, path, filename);
-        const stream = createWriteStream(filePath);
-        file.pipe(stream);
+        
+        const writeFileStream = createWriteStream(filePath);
+
+        file.pipe(writeFileStream);
         req.on("close", () => {
-          stream.end();
-          unlink(join(publicPath, path, filename));
+          writeFileStream.end();
+          res.status(201).json({ message: "file uploaded" });
+          res.end()
         });
+        req.on("error",()=>{
+          unlink(join(publicPath, path, filename));
+          res.end()
+        })
       });
-      bb.on("close", async () => {
-        res.status(201).json({ message: "file uploaded" });
-        res.end();
-      });
+      
       bb.on("error", async (error) => {
         console.log(error);
         res.status(500).json({ messge: "some error occured" });
