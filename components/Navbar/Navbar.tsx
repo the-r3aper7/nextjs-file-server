@@ -1,10 +1,14 @@
 import React, { useContext } from "react";
 import { createStyles, Header, Progress, ActionIcon } from "@mantine/core";
 import { IconCloudUpload } from "@tabler/icons";
-import UploadModal from "./UploadComponents/Upload";
 import uploadFileContext from "../../contexts/UploadFiles/UploadContext";
 import Search from "./Search";
 import { NextLink } from "@mantine/next";
+import dynamic from "next/dynamic";
+
+const UploadModal = dynamic(() => import("./UploadComponents/Upload"), {
+  ssr: true,
+});
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -33,8 +37,7 @@ function Navbar() {
             component={NextLink}
             href={"/public"}
             size={"xl"}
-            mx={"xs"}
-          >
+            mx={"xs"}>
             <IconCloudUpload size={26} />
           </ActionIcon>
           <Search />

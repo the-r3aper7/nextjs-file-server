@@ -8,8 +8,7 @@ function Download(props: { fpath: string }) {
       component={NextLink}
       color={"green"}
       icon={<IconDownload size={16} />}
-      href={`/api/download?path=${encodeURIComponent(props.fpath)}`}
-    >
+      href={`/api/download?path=${encodeURIComponent(props.fpath)}`}>
       Download
     </Menu.Item>
   );

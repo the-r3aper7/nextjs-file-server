@@ -1,6 +1,6 @@
 ## Getting Started with Nextjs File Server
 
-Create ```.env``` file and add the following
+Create `.env` file and add the following
 
 ```
 SHARED_DISK="<Exact path which you want to share>"
@@ -13,7 +13,7 @@ npm install
 # or
 yarn install
 # or
-pnpm install 
+pnpm install
 ```
 
 Run the development server:

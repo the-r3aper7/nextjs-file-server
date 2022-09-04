@@ -14,8 +14,7 @@ function FolderCard(props: elementalData) {
         <Text
           lineClamp={1}
           component={NextLink}
-          href={`/public/${props.fpath}`}
-        >
+          href={`/public/${props.fpath}`}>
           {props.name}
         </Text>
         <Group position="right">

@@ -21,21 +21,22 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       bb.on("file", async (_, file, info) => {
         const filename = info.filename;
         const filePath = join(publicPath, path, filename);
-        
+
         const writeFileStream = createWriteStream(filePath);
 
         file.pipe(writeFileStream);
+
         req.on("close", () => {
           writeFileStream.end();
           res.status(201).json({ message: "file uploaded" });
-          res.end()
+          res.end();
         });
-        req.on("error",()=>{
+        req.on("error", () => {
           unlink(join(publicPath, path, filename));
-          res.end()
-        })
+          res.end();
+        });
       });
-      
+
       bb.on("error", async (error) => {
         console.log(error);
         res.status(500).json({ messge: "some error occured" });

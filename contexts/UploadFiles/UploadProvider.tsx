@@ -59,8 +59,7 @@ const UploadProvider = ({ children }) => {
         message,
         fileSize,
         uploadedFileSize,
-      }}
-    >
+      }}>
       {children}
     </uploadFileContext.Provider>
   );

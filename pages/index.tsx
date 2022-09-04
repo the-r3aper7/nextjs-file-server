@@ -7,15 +7,19 @@ import {
   Text,
   Space,
 } from "@mantine/core";
-import { Login } from "../components";
 import { NextLink } from "@mantine/next";
+import dynamic from "next/dynamic";
+
+const Login = dynamic(() => import("../components/AuthComponents/Login"), {
+  ssr: true,
+});
 
 export default function Home() {
   return (
     <Container>
       <Head>
         <title>File Server</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
 
       <SimpleGrid cols={2} spacing="lg">
@@ -24,8 +28,7 @@ export default function Home() {
           p={"lg"}
           withBorder={true}
           component={NextLink}
-          href={"/public"}
-        >
+          href={"/public"}>
           <Space h={1} />
           <Center>
             <Text>Public Files</Text>

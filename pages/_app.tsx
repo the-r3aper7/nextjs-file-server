@@ -1,9 +1,13 @@
 import type { AppProps } from "next/app";
 import { MantineProvider } from "@mantine/core";
 import "../styles/globals.css";
-import { Navbar } from "../components";
 import { NotificationsProvider } from "@mantine/notifications";
 import { UploadProvider } from "../contexts";
+import dynamic from "next/dynamic";
+
+const Navbar = dynamic(() => import("../components/Navbar/Navbar"), {
+  ssr: true,
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

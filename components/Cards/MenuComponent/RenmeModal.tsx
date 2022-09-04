@@ -1,6 +1,6 @@
 import { Modal, Button, Group, TextInput } from "@mantine/core";
 import React, { FormEvent, useState } from "react";
-import { useNotifications } from "@mantine/notifications";
+import { showNotification } from "@mantine/notifications";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useSWRConfig } from "swr";
@@ -16,7 +16,6 @@ function RenmeModal(props: propsType) {
   const [renameFileText, setRenameFileText] = useState<string>(props.name);
 
   const { params } = useRouter().query as { params: string[] };
-  const notification = useNotifications();
   const { mutate } = useSWRConfig();
 
   const handleRename = (e: FormEvent<HTMLFormElement>) => {
@@ -31,7 +30,7 @@ function RenmeModal(props: propsType) {
       mutate(["/api/get-files", path]);
       props.setOpen(false);
       setRenameFileText("");
-      notification.showNotification({
+      showNotification({
         color: "blue",
         title: "Renamed",
         message: `${props.name} was renamed !`,
@@ -43,8 +42,7 @@ function RenmeModal(props: propsType) {
       opened={props.open}
       onClose={() => props.setOpen(false)}
       title={`Rename :- ${props.name}`}
-      centered
-    >
+      centered>
       <form onSubmit={handleRename}>
         <TextInput
           type={"text"}

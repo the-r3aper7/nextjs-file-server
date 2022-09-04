@@ -1,8 +1,15 @@
 import { elementalData } from "../../interfaces";
-import { PopulateData, LoadingCard } from "../../components";
+import dynamic from "next/dynamic";
 import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
 import { useRouter } from "next/router";
+
+const PopulateData = dynamic(
+  () => import("../../components/Cards/PopulateData"),
+  {
+    ssr: true,
+  }
+);
 
 interface resData {
   files: [elementalData];
@@ -20,8 +27,6 @@ function Index({ fallbackData }: { fallbackData: resData }) {
   ) as { data: resData; error: any };
   // handling error while fetching data
   if (error) return console.log(error);
-  // Loading Section usually not shown
-  if (!data) return <LoadingCard />;
 
   return <PopulateData files={data.files} />;
 }

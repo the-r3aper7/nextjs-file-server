@@ -12,7 +12,7 @@ const useStyles = createStyles(() => ({
 }));
 
 function UploadModal() {
-  const [opened, setOpened] = useToggle<boolean>(false, [false, true]);
+  const [opened, setOpened] = useToggle<boolean>([false, true]);
   const { classes } = useStyles();
 
   return (
@@ -23,10 +23,9 @@ function UploadModal() {
 
       <Group noWrap spacing={0}>
         <Button
-          leftIcon={<IconUpload size={16} />}
+          leftIcon={<IconUpload size={18} stroke={3} />}
           onClick={() => setOpened()}
-          className={classes.button}
-        >
+          className={classes.button}>
           Upload
         </Button>
         <Create />

@@ -1,4 +1,11 @@
-import { createStyles, Menu, Group, ActionIcon, Modal } from "@mantine/core";
+import {
+  createStyles,
+  Menu,
+  Group,
+  ActionIcon,
+  Modal,
+  Text,
+} from "@mantine/core";
 import { useToggle } from "@mantine/hooks";
 import { IconFolder, IconPlus } from "@tabler/icons";
 import React from "react";
@@ -22,34 +29,32 @@ const useStyles = createStyles((theme) => ({
 
 function Create() {
   const { classes, theme } = useStyles();
-  const [open, toggleOpen] = useToggle<boolean>(false, [false, true]);
+  const [open, toggleOpen] = useToggle<boolean>([false, true]);
 
   return (
     <>
       <Modal opened={open} onClose={() => toggleOpen()} title={"Create folder"}>
         <CreateFolderModal toggleModal={toggleOpen} />
       </Modal>
+
       <Group noWrap spacing={0}>
-        <Menu
-          control={
+        <Menu transition={"scale-y"} position={"bottom-end"}>
+          <Menu.Target>
             <ActionIcon
               variant="filled"
               color={theme.primaryColor}
               size={36}
-              className={classes.menuControl}
-            >
-              <IconPlus size={16} />
+              className={classes.menuControl}>
+              <IconPlus size={24} stroke={3} />
             </ActionIcon>
-          }
-          transition={"scale-y"}
-          placement={"center"}
-        >
-          <Menu.Item
-            icon={<IconFolder size={16} />}
-            onClick={() => toggleOpen()}
-          >
-            Create folder
-          </Menu.Item>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Item
+              icon={<IconFolder size={16} />}
+              onClick={() => toggleOpen()}>
+              <Text lineClamp={1}>Create folder</Text>
+            </Menu.Item>
+          </Menu.Dropdown>
         </Menu>
       </Group>
     </>

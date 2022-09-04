@@ -3,11 +3,10 @@ import {
   Group,
   Button,
   createStyles,
-  MantineTheme,
   useMantineTheme,
 } from "@mantine/core";
-import { Dropzone, DropzoneStatus } from "@mantine/dropzone";
-import { IconCloudUpload } from "@tabler/icons";
+import { Dropzone } from "@mantine/dropzone";
+import { IconPhoto, IconUpload } from "@tabler/icons";
 import uploadFileContext from "../../../contexts/UploadFiles/UploadContext";
 import { useRouter } from "next/router";
 import { useSWRConfig } from "swr";
@@ -39,16 +38,6 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function getActiveColor(status: DropzoneStatus, theme: MantineTheme) {
-  return status.accepted
-    ? theme.colors[theme.primaryColor][6]
-    : status.rejected
-    ? theme.colors.red[6]
-    : theme.colorScheme === "dark"
-    ? theme.colors.dark[0]
-    : theme.black;
-}
-
 interface propsTypes {
   setModalOpen: React.SetStateAction<any>;
 }
@@ -74,42 +63,38 @@ function DropZoneModal(props: propsTypes) {
         openRef={openRef}
         onDrop={handleOnDrop}
         className={classes.dropzone}
-        radius="md"
-      >
-        {(status) => (
-          <div style={{ pointerEvents: "none" }}>
-            <Group position="center">
-              <IconCloudUpload
-                size={50}
-                color={getActiveColor(status, theme)}
-              />
-            </Group>
-            <Text
-              align="center"
-              weight={700}
-              size="lg"
-              mt="xl"
-              sx={{ color: getActiveColor(status, theme) }}
-            >
-              {status.accepted
-                ? "Drop files here"
-                : status.rejected
-                ? "Some Error Occured"
-                : "Upload Files"}
-            </Text>
-            <Text align="center" size="sm" mt="xs" color="dimmed">
-              Drag and Drop your files here
-            </Text>
-          </div>
-        )}
+        radius="md">
+        <Group
+          position="center"
+          spacing="xl"
+          style={{ minHeight: 220, pointerEvents: "none" }}>
+          <Dropzone.Accept>
+            <IconUpload
+              size={50}
+              stroke={1.5}
+              color={
+                theme.colors[theme.primaryColor][
+                  theme.colorScheme === "dark" ? 4 : 6
+                ]
+              }
+            />
+          </Dropzone.Accept>
+
+          <Dropzone.Idle>
+            <IconPhoto size={100} stroke={1.5} />
+          </Dropzone.Idle>
+
+          <Text size="xl" inline>
+            Drag images here or click to select files
+          </Text>
+        </Group>
       </Dropzone>
 
       <Button
         className={classes.control}
         size="md"
         radius="xl"
-        onClick={() => openRef.current()}
-      >
+        onClick={() => openRef.current()}>
         Select files
       </Button>
     </div>

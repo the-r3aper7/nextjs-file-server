@@ -1,5 +1,5 @@
 import { Menu } from "@mantine/core";
-import { useNotifications } from "@mantine/notifications";
+import { showNotification } from "@mantine/notifications";
 import { IconTrash } from "@tabler/icons";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -12,7 +12,6 @@ interface propsType {
 
 function Delete(props: propsType) {
   const { params } = useRouter().query as { params: string[] };
-  const notification = useNotifications();
   const { mutate } = useSWRConfig();
 
   const handleDelete = () => {
@@ -22,7 +21,7 @@ function Delete(props: propsType) {
         params: { path: props.fpath },
       })
       .then((res) => {
-        notification.showNotification({
+        showNotification({
           color: "red",
           title: "File Deleted",
           message: `${props.name} was deleted!`,
@@ -35,8 +34,7 @@ function Delete(props: propsType) {
     <Menu.Item
       color={"red"}
       icon={<IconTrash size={16} />}
-      onClick={handleDelete}
-    >
+      onClick={handleDelete}>
       Delete
     </Menu.Item>
   );
